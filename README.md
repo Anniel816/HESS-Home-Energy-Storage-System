@@ -25,7 +25,7 @@ If the prototype link does not automatically open the interactive flow, please s
 
 Replace with your GitHub repository URL (for submission):
 
-> https://github.com/yourusername/HESS-UI
+> https://github.com/Anniel816/HESS-Home-Energy-Storage-System
 
 This repository includes:
 
