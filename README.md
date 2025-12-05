@@ -1,149 +1,183 @@
-
-# HESS — Home Energy Storage System
+# HESS — Home Energy Storage System Dashboard  
+SYSEN 5151 Final Project
 
 HESS is an interactive UI prototype that demonstrates the user experience and workflow of a smart Home Energy Storage System app. It encompasses features like solar panel monitoring, energy storage status, EV charging management, and AI-driven energy optimization.
 
 This repository provides all the documentation needed to use and understand the design prototype tool (Figma).
 
 ---
-
-## 🔗 1. Product Access Link (Figma Prototype)
-
 You can view and interact with the full HESS UI prototype here:
 
-**Figma Design File:**  
-https://www.figma.com/design/jZbQvsk0f8iFuZgwDrQF0J/HESS?node-id=0-1  
+Figma Design File:
+https://www.figma.com/design/jZbQvsk0f8iFuZgwDrQF0J/HESS?node-id=0-1
 
-**Figma Clickable Prototype:**  
+Figma Clickable Prototype:
 https://www.figma.com/proto/jZbQvsk0f8iFuZgwDrQF0J/HESS?node-id=1-5307&p=f&t=Z0ZFiKPjseQgXG71-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A5307
 
-If the prototype link does not automatically open the interactive flow, please switch to **Prototype mode** inside Figma.
+If the prototype link does not automatically open the interactive flow, please switch to Prototype mode inside Figma.
 
 ---
 
-## 🔗 2. GitHub Repository Link
-
-Replace with your GitHub repository URL (for submission):
-
-> https://github.com/Anniel816/HESS-Home-Energy-Storage-System
-
-This repository includes:
-
-- The full Figma access links  
-- Documentation and descriptions for how the product works  
-- (Optional) Screenshots of the main UI screens  
-- Instructions for potential future implementation
+## 📌 Table of Contents
+1. Project Overview  
+2. System Architecture  
+3. Dataset Description  
+4. Variable Codebook  
+5. Implemented Features  
+6. Usage Instructions  
+7. Analytical Documentation  
+8. Limitations & Future Work  
+9. Repository Structure  
 
 ---
 
-## 📘 Project Overview
+## 1. Project Overview
 
-HESS (Home Energy Storage System) is designed to help users monitor and manage home energy usage through a clean, intuitive, and modern interface. The prototype includes dashboards for:
+HESS provides homeowners with an intuitive dashboard to:
 
-- 🔋 **Battery storage monitoring**  
-- ☀️ **Solar generation tracking**  
-- 🚗 **EV charging overview**  
-- 💡 **Smart energy optimization suggestions (AI-based)**  
-- 🏠 **Home appliance energy consumption**  
-- 📈 **Analytics & trends**
+- Monitor solar generation  
+- Examine home energy consumption  
+- Track battery SOC  
+- Determine whether EV charging is optimal  
+- Understand 24-hour energy behavior through simulated data  
 
-This prototype is part of a larger project exploring smart energy solutions for residential users.
+The prototype aligns with the original Figma design and expands functionality through a Python analysis module.
+
 
 ---
 
-## 🎯 Purpose & Intended Users
+## 2. System Architecture
 
-### Purpose
+Text-based diagram:
 
-To visually demonstrate how a homeowner might interact with a unified platform in order to monitor, forecast, and control home energy systems.
+User Inputs → Simulation Engine → 24h Dataset → Dashboard Visuals → Rule-Based Recommendations  
+                                        ↘  
+                                         Analytical Module (Python)
 
-### Intended Users
+System components:
 
-- Homeowners with solar & storage  
-- Energy management system providers  
-- Designers & developers  
-- Instructors evaluating design, workflow, and usability  
-
-### Example Use Case
-
-A user wants to:
-
-- Track solar power generation in real time  
-- Check current battery charge levels  
-- Schedule EV charging at an optimal time  
-- Receive automatic recommendations for saving energy  
+- Streamlit UI  
+- Synthetic data generator  
+- Altair 24-hour visualization  
+- Recommendation logic  
+- Analytical module (net load, utilization, SOC trends, EV feasibility)
 
 ---
 
-## 🧱 Scope of This Prototype
+## 3. Dataset Description
 
-This repository contains **design only (UI/UX prototype)**.  
-It does **not** include backend logic, real device integration, or functional energy simulation code.
+The project uses a fully simulated dataset for clarity, reproducibility, and privacy.
 
-The goals of this prototype are to:
+Dataset components include:
 
-- Demonstrate layout and information hierarchy  
-- Illustrate the end-to-end user workflow  
-- Prepare for future conversion into a working application  
-- Allow stakeholders to evaluate usability and design decisions  
+- **Solar Generation:** sinusoidal daylight curve  
+- **Home Load:** random uniform between 2–5 kW  
+- **Battery SOC:** linear interpolation across 24 hours  
+- **EV Charging State:** boolean  
 
----
-
-## 📝 Features Demonstrated in the Prototype
-
-### 1. Dashboard
-
-- Overview of solar production  
-- Overview of energy consumption  
-- Battery charging status and high-level KPIs  
-
-### 2. Battery Management Screen
-
-- Current battery charge level  
-- Estimated availability / remaining hours  
-- Suggested optimization actions (e.g., when to charge or discharge)  
-
-### 3. EV Charging Screen
-
-- EV charging status (on / off / scheduled)  
-- Charging schedule and time window  
-- Cost optimization suggestions based on tariffs or solar availability  
-
-### 4. Analytics Screen
-
-- Historical trends for energy use and solar production  
-- Daily / weekly / monthly breakdowns  
-- Comparison between consumption and generation  
-
-### 5. Settings / Profile
-
-- User preferences (units, theme, notification settings, etc.)  
-- Device management (linked batteries, inverters, EVs, etc.)  
-- Home energy configuration (location, system size, typical load)  
+Full dataset documentation:  
+👉 [docs/dataset_description.md](docs/dataset_description.md)
 
 ---
 
-## 🧭 Alignment With Product Development Plan
+## 4. Variable Codebook
 
-This prototype matches the originally defined product concept:
+The complete variable list is provided in:  
+👉 [docs/codebook.md](docs/codebook.md)
 
-- ✅ Clear target user: **home energy consumers**  
-- ✅ Clear use case: **visualizing and optimizing home energy flows**  
-- ✅ Minimal user inputs required (most information is visualized and pre-configured)  
-- ✅ Intuitive navigation suitable even for non-technical users  
-- ✅ Design guided by stakeholder expectations and energy-tech UX best practices  
+Core variables:
+
+| Variable | Type | Description |
+|---------|------|-------------|
+| battery_level | slider | Battery SOC (%) |
+| solar_output | slider | Real-time solar generation (kW) |
+| home_load | slider | Household demand (kW) |
+| ev_charging | toggle | EV charging enabled/disabled |
+| Solar (kW) | simulated | Hourly solar generation |
+| Home Load (kW) | simulated | Hourly household load |
+| Battery Level (%) | simulated | Hourly SOC |
 
 ---
 
-## 📌 Notes for Future Implementation
+## 5. Implemented Features
 
-If this UI is extended into a working tool, possible directions include:
+### ✔ Dashboard UI
+- Battery SOC progress bar  
+- Real-time solar and load indicators  
+- EV charging UI (fixed 7.2 kW)  
+- 24-hour solar vs. load trend chart  
 
-- Implementing the interface in React / Vue / Flutter or Streamlit  
-- Connecting to real-time data from home energy devices or APIs  
-- Adding machine learning models for forecasting and optimization  
-- Integrating authentication and personalized user profiles  
+### ✔ Energy Analysis (Python)
+A dedicated analytical module performs:
 
-For now, this repository is focused on the **design prototype** and related documentation.
+- Net Load calculation  
+- Solar Utilization calculation  
+- SOC trend interpretation  
+- EV charging feasibility assessment  
 
+Documentation:  
+👉 [docs/HESS_Analytical_Documentation.md](docs/HESS_Analytical_Documentation.md)  
 
+Python script:  
+👉 [analysis/hess_analysis.py](analysis/hess_analysis.py)
+
+---
+
+## 6. Usage Instructions
+
+### Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+### Run the dashboard:
+```bash
+streamlit run app.py
+```
+
+## 7. Analytical Documentation
+
+All analytical work required by the rubric is detailed here:
+
+👉 [docs/HESS_Analytical_Documentation.md](docs/HESS_Analytical_Documentation.md)
+
+Includes:
+
+- Analytical methods (plain text formulas)  
+- Computed numerical results  
+- Interpretation of outcomes  
+- Limitations and assumptions  
+- Future analytical extensions  
+
+---
+
+## 8. Limitations & Future Work
+
+### Current Limitations
+- Solar simulation is idealized  
+- Home load is randomized  
+- Battery SOC uses a linear model  
+- EV charging logic is rule-based  
+- No weather, pricing, or real hardware integration  
+
+### Future Expansion
+- Solar and load forecasting (LSTM, Prophet, SARIMA)  
+- MILP battery optimization  
+- Smart EV charging scheduling  
+- API-based real-time data ingestion (inverter, smart meter)  
+
+---
+
+## 9. Repository Structure
+
+HESS/
+├── app.py
+├── analysis/
+│ └── hess_analysis.py
+├── docs/
+│ ├── analysis_documentation.md
+│ ├── codebook.md
+│ ├── dataset_description.md
+│ ├── development_plan_alignment.md
+│ ├── usage_instructions.md
+│ └── user_persona_use_case.md
+└── README.md
