@@ -57,24 +57,71 @@ date_range = pd.date_range(
     periods=24,
     freq="H"
 )
+```
 ### 3.2 Solar Generation
+Modeled using a half-sine curve to approximate daytime solar output:
+```python
 solar_curve = np.clip(
     np.sin(np.linspace(0, np.pi, 24)) * 8,
     0,
     None
 )
+```
+- Values are clipped at 0 to avoid negative generation.
+- Peak output is around 8 kW at midday.
+- Early morning and late evening values are close to 0 kW.
+
 ### 3.3 Home Load
+Home load is simulated as a random draw from a uniform distribution:
+```python
 home_load_series = np.random.uniform(2, 5, 24)
+```
+- Lower bound: 2 kW
+- Upper bound: 5 kW
+- Represents typical continuous household usage (lighting, appliances, HVAC).
+  
 ### 3.4 Battery Level
+Battery level is modeled as a simple linear trend over the 24-hour period, based on the current slider value:
+```python
 battery_series = np.linspace(
     battery_level - 10,
     battery_level,
     24
 )
+```
+- Assumes the battery has charged by approximately 10 percentage points over the past 24 hours.
+- Ensures a smooth trend suitable for visualization.
+
 ### 3.5 Dataset Assembly
+All components are combined into a single DataFrame:
+```python
 df = pd.DataFrame({
     "time": date_range,
     "Solar (kW)": solar_curve,
     "Home Load (kW)": home_load_series,
     "Battery Level (%)": battery_series
 })
+```
+This DataFrame is used for plotting the energy trends within the Streamlit app.
+
+## 4. Interpretation and Assumptions
+
+- This section explains how to interpret the simulated values and what assumptions guide the model.
+- The dataset is fully simulated; it does not reflect a specific real household.
+- Solar follows a natural daylight performance curve (low at dawn/dusk, peak at noon).
+- Home load fluctuates reasonably to show realistic household consumption.
+- Battery level changes gradually to keep trends visually meaningful.
+- EV charging (ev_charging) affects recommendation logic but does not alter the simulated dataset in this prototype.
+- The goal is clarity and interpretability rather than engineering precision.
+## 5. Reproducibility
+To ensure reproducibility, all simulations originate directly from code executed at runtime.
+The dataset can be made deterministic by adding a random seed:
+```python
+np.random.seed(42)
+```
+Reproducibility notes:
+
+- The dataset structure remains constant (24-hour, hourly resolution).
+- Only the home load series is stochastic unless seeded.
+- Re-running the application regenerates the dataset in the same format.
+- All values derive strictly from the logic shown above — no hidden or external sources.
