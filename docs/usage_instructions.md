@@ -22,12 +22,15 @@ Before running the tool, please ensure:
 
 ```bash
 cd path/to/HESS
+
+
 ## 3. Launching the Application
 
 Run the following command in the project directory:
 
 ```bash
 streamlit run app.py
+
 ## 4. Main Interface Overview
 
 The HESS dashboard includes:
